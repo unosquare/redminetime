@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+	<Bundle Name="Redmine Logger" Version="1.0.0.0" Manufacturer="Salvador Gomez Retamoza" UpgradeCode="e5d6e9ae-6bd2-462d-9d4b-b2a593324b1b" 
+          IconSourceFile="..\..\RedmineLogger\Assets\RedmineLogger.ico" DisableModify="yes" DisableRepair="yes" >
+		<BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkLicense" >
+      <bal:WixStandardBootstrapperApplication LicenseUrl="" LogoFile=".\redmine_logger.png" />
+    </BootstrapperApplicationRef>
+
+		<Chain>
+      <PackageGroupRef Id="NetFx462Web"/>
+			<MsiPackage  SourceFile="$(var.RedmineLogger.Setup.TargetPath)" />
+		</Chain>
+  
+	</Bundle>
+</Wix>

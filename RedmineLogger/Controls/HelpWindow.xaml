@@ -1,0 +1,69 @@
+﻿<controls:MetroWindow x:Class="RedmineLogger.Controls.HelpWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:local="clr-namespace:RedmineLogger.Controls"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      mc:Ignorable="d"
+                      IsMaxRestoreButtonEnabled="False"
+                      IsMinButtonEnabled="False"
+                      ShowMaxRestoreButton="False"
+                      WindowStyle="ThreeDBorderWindow"
+                      ShowMinButton="False"
+                      FontSize="14"
+                      Title="Redmine Logger Help" Height="450" Width="550">
+    <controls:MetroWindow.Resources>
+        <Style x:Key="HelpHeader2Style" TargetType="Run">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+        </Style>
+    </controls:MetroWindow.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="15,5,15,0" VerticalAlignment="Top">
+            <TextBlock FontSize="18" FontWeight="DemiBold" HorizontalAlignment="Center">Redmine Logger - How to use it</TextBlock>
+            <Line HorizontalAlignment="Center" Width="250" StrokeThickness="2" Stroke="DimGray" X1="0" X2="380" Height="4" Margin="0,3,0,3"/>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" >
+            <StackPanel Margin="15,0,15,10">
+                <TextBlock TextWrapping="Wrap" Margin="0,5">
+                <Run Style="{StaticResource HelpHeader2Style}">Time Entry colors</Run><LineBreak />
+                Entries already saved in Redmine are gray, while unsaved entries are white.<LineBreak />
+                <LineBreak />
+                <Run Style="{StaticResource HelpHeader2Style}">Adding time entries (Logging time)</Run><LineBreak />
+                Add a new entry by clicking the "+" button, or by right-clicking a day bar and selecting "Add new entry..." in the pop-up menu.
+                <LineBreak />
+                Then capture the entry info, and click "Add"<LineBreak />
+                <LineBreak />
+                You add a new entry each time you click the Add button.<LineBreak />
+                <LineBreak />
+                You can also click/select a day, and the Date of the New Entry form will change (helps to fill quicker, specially similar entries)
+                <LineBreak />
+                <LineBreak />
+                Drag-and-drop an entry to copy it in a different day.<LineBreak />
+                <LineBreak />
+                <Run Style="{StaticResource HelpHeader2Style}">Delete an unsaved entry</Run><LineBreak />
+                Delete an entry by clicking in the X button in the corner of the entry.<LineBreak />
+                <LineBreak />
+                <Run Style="{StaticResource HelpHeader2Style}">Remember...</Run><LineBreak />
+                Don't forget to save! <LineBreak />
+                You can save as many times you want, or until you're happy with all the entries.<LineBreak />
+                <LineBreak />
+                P.S. You can also change the size of the day bars in the view, for a full glimpse of the period.
+                <LineBreak />
+                <LineBreak />
+                <Run>Regards,</Run><LineBreak />
+                <LineBreak />
+                <Run FontStyle="Italic">Salvador Gomez Retamoza</Run><LineBreak />
+                Unosquare 
+                <Hyperlink NavigateUri="http://www.unosquare.com" Name="UnosquareHyperlink" RequestNavigate="Hyperlink_OnRequestNavigate">www.unosquare.com</Hyperlink>
+                <LineBreak />
+                </TextBlock>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</controls:MetroWindow>

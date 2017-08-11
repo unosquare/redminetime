@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="RedmineLogger.Controls.DayActivityControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:models="clr-namespace:RedmineLogger.Models"
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance models:DayActivity, IsDesignTimeCreatable=True}"
+             d:DesignHeight="300" d:DesignWidth="200">
+
+    <Border VerticalAlignment="Stretch" Name="DayActivityBorder" BorderThickness="3"
+                          dd:DragDrop.IsDragSource="False"
+                          dd:DragDrop.IsDropTarget="True"
+                          dd:DragDrop.DropHandler="{Binding}"            
+            Style="{StaticResource DayActivityBorderStyle}">
+        <Border.BorderBrush>
+            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveCaptionColorKey}}"/>
+        </Border.BorderBrush>
+        <Border.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Add time entry..." Command="{Binding AddTimeEntryCommand}" >
+                    <MenuItem.Icon>
+                        <Image Source="../Assets/Images/clock.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Set day as Holiday" Command="{Binding SetHolidayCommand}" />
+                <MenuItem Header="Set day as Working Day" Command="{Binding SetWorkingDayCommand}" />
+                <MenuItem Header="Set day as PTO" Command="{Binding SetPersonalTimeOffDayCommand}" />
+                <MenuItem Header="Set day as Weekend" Command="{Binding SetWeekendDayCommand}" />
+            </ContextMenu>
+        </Border.ContextMenu>
+        <Border VerticalAlignment="Bottom" Style="{StaticResource DayActivityBackgroundStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+
+                <ListView Grid.Row="0"
+                          Margin="5"
+                          Name="DayListView"
+                          dd:DragDrop.IsDragSource="True"
+                          dd:DragDrop.IsDropTarget="False"
+                          dd:DragDrop.DropHandler="{Binding}"            
+                          ItemsSource="{Binding TimeEntries}"
+                          ItemTemplate="{StaticResource TimeEntryTemplate}" Background="#4CFFFFFF"
+                          SelectedItem="{Binding SelectedTimeEntry}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
+
+                <Border Grid.Row="1" Margin="10,2">
+                    <Grid VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextAlignment="Left" Foreground="AliceBlue">
+                            <Run Text="{Binding Day, StringFormat=dddd}" FontSize="10" />
+                            <LineBreak />
+                            <Run Text="{Binding Day, StringFormat=dd/MMM}" FontWeight="Bold" FontSize="16" />
+                        </TextBlock>
+                        <TextBlock Grid.Column="1" FontSize="20" TextAlignment="Right" Foreground="AliceBlue">
+                            <Run Text="{Binding TotalHours, StringFormat=#0.#}" FontWeight="Bold" />
+                            <Run Text="hours" />
+                        </TextBlock>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Border>
+</UserControl>

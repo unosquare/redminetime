@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="Redmine Logger" Language="1033" Version="1.0.0.0" Manufacturer="Salvador Gomez Retamoza" UpgradeCode="d3a75436-bcbd-463f-890f-736c8d29934f">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_462_OR_LATER_INSTALLED"/>
+    <Condition Message='This setup requires the .NET Framework 4.6.2 installed.'>
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_462_OR_LATER_INSTALLED]]>
+    </Condition>
+    
+    <Feature Id="ProductFeature" Title="RedmineLogger" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+       
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="RedmineLogger" />
+			</Directory>
+
+      <Directory Id="ProgramMenuFolder" Name="Programs" />
+      <Directory Id="DesktopFolder" Name="Desktop" />
+      
+    </Directory>
+  </Fragment>
+
+	<Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<Component Id="ProductComponent" Guid="14150A2B-D986-40FB-A27D-3F92768EB38E" >
+        <File Source="$(var.RedmineLogger.TargetPath)" Id="RedmineLoggerExe" KeyPath="yes">
+          <Shortcut Id="SCUT_StartMenu" Directory="ProgramMenuFolder" Name="Redmine Logger" WorkingDirectory='INSTALLDIR' Advertise="yes" Icon="ICON_StartMenu.exe" >
+            <Icon Id="ICON_StartMenu.exe" SourceFile="$(var.RedmineLogger.TargetPath)"/>            
+          </Shortcut>
+          <Shortcut Id="SCUT_Desktop" Directory="DesktopFolder" Name="Redmine Logger" WorkingDirectory='INSTALLDIR' Advertise="yes" Icon="ICON_Desktop.exe" >
+            <Icon Id="ICON_Desktop.exe" SourceFile="$(var.RedmineLogger.TargetPath)"/>
+          </Shortcut>
+        </File>
+      </Component>
+      <Component Id="Dependencies" Guid="7DADCA6A-A6DF-40EA-80CA-526CDCCCD31F">
+        <File Source="..\..\RedmineLogger\Assets\RedmineLogger.ico" />
+        <File Source="$(var.RedmineLogger.TargetDir)\Autofac.dll" />
+        <File Source="$(var.RedmineLogger.TargetDir)\GalaSoft.MvvmLight.dll" />
+        <File Source="$(var.RedmineLogger.TargetDir)\GalaSoft.MvvmLight.Extras.dll" />
+        <File Source="$(var.RedmineLogger.TargetDir)\GalaSoft.MvvmLight.Platform.dll" />
+        <File Source="$(var.RedmineLogger.TargetDir)\GongSolutions.Wpf.DragDrop.dll" />
+        <File Source="$(var.RedmineLogger.TargetDir)\MahApps.Metro.dll" />
+        <File Source="$(var.RedmineLogger.TargetDir)\Microsoft.Practices.ServiceLocation.dll" />
+        <File Source="$(var.RedmineLogger.TargetDir)\redmine-net451-api.dll" />
+        <File Source="$(var.RedmineLogger.TargetDir)\System.Windows.Interactivity.dll" />
+        <File Source="$(var.RedmineLogger.TargetDir)\RedmineLogger.exe.config" />
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
