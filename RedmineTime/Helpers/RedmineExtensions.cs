@@ -9,6 +9,7 @@ namespace Unosquare.RedmineTime.Helpers
         {
             return dateTime.ToString("yyyy-MM-dd");
         }
-        
+
+
     }
 }

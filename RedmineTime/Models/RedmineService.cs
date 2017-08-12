@@ -35,7 +35,8 @@ namespace Unosquare.RedmineTime.Models
         public IEnumerable<RedmineUserProject> Projects
             =>
                 _projects ??
-                (_projects = Manager.GetObjects<Project>().Select(p => new RedmineUserProject(Manager, p, User)));
+                (_projects =
+                    Manager.GetObjects<Project>(9999, 0, null).Select(p => new RedmineUserProject(Manager, p, User)));
 
     }
 }

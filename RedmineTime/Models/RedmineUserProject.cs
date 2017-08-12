@@ -42,7 +42,8 @@ namespace Unosquare.RedmineTime.Models
             {
                 {RedmineKeys.SPENT_ON, $"><{period.StartDate.AsRedmineDate()}|{period.EndDate.AsRedmineDate()}"},
                 {RedmineKeys.USER_ID, $"{_user.Id}"},
-                {RedmineKeys.INCLUDE, "issues"}
+                {RedmineKeys.INCLUDE, "issues"},
+                {RedmineKeys.LIMIT, "9999"}
             };
 
             var timeEntries = _manager.GetObjects<TimeEntry>(parameters);
