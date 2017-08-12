@@ -1,0 +1,179 @@
+﻿<UserControl x:Class="Unosquare.RedmineTime.Controls.LogPeriodControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Unosquare.RedmineTime.Controls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             DataContext="{Binding Source={StaticResource Locator}, Path=LogPeriod}"
+             mc:Ignorable="d"
+             Background="AliceBlue"
+             d:DesignHeight="500" d:DesignWidth="700">
+    <UserControl.Resources>
+        <DataTemplate x:Key="DayActivityTemplate">
+            <local:DayActivityControl Width="200" VerticalAlignment="Stretch"
+                                      VerticalContentAlignment="Stretch" />
+        </DataTemplate>
+        <DataTemplate x:Key="DayActivitySmallTemplate">
+            <local:DayActivitySmallControl Width="75" VerticalAlignment="Stretch" />
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <Grid Name="HeaderContainer" Margin="10,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <!--<Button Grid.RowSpan="3" Style="{DynamicResource MetroCircleButtonStyle}"
+                    Content="{DynamicResource appbar_navigate_previous}"
+                    RenderTransformOrigin="0.7,0.7" Width="82" Margin="0,0,22,0"
+                    Command="{Binding ReturnToProjectSelectionCommand}">
+                <Button.LayoutTransform>
+                    <ScaleTransform ScaleY="0.7" ScaleX="0.7" />
+                </Button.LayoutTransform>
+            </Button>-->
+
+            <Button Grid.RowSpan="3"  Width="60"
+                        Height="60"
+                        Command="{Binding ReturnToProjectSelectionCommand}"
+                        Style="{DynamicResource MetroCircleButtonStyle}" >
+                <Button.ToolTip>Return to Project Selection</Button.ToolTip>
+                <Rectangle Width="20"
+                               Height="20"
+                               Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                                         Visual="{DynamicResource appbar_navigate_previous}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+
+            <TextBlock TextAlignment="Left" FontSize="24"
+                       Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">
+                <Run Text="Timesheet for" />
+                <Run Text="{Binding Path=Period.StartDate, StringFormat=M}" />
+                <Run Text="to" />
+                <Run Text="{Binding Path=Period.EndDate, StringFormat=M}" />
+            </TextBlock>
+
+            <TextBlock TextAlignment="Left" FontSize="14" Foreground="DimGray"
+                       Grid.Row="2" Grid.Column="1">
+                <Run Text="{Binding Path=SelectedUserProject.ProjectInfo.Name}" />
+                <Run Text="project" />
+            </TextBlock>
+
+            <TextBlock Grid.Row="0" TextAlignment="Right" Grid.Column="2">
+                <Run Text="{Binding Path=SelectedUser.FirstName}" FontWeight="Bold" />
+                <Run Text="{Binding Path=SelectedUser.LastName}" FontWeight="Bold" />
+            </TextBlock>
+
+            <TextBlock Grid.Row="1" TextAlignment="Right" Grid.Column="2">
+                <Run Text="Unsaved hours:" />
+                <Run Text="{Binding Path=PeriodUnsavedHours, StringFormat=##0.#}" />
+            </TextBlock>
+
+            <TextBlock Grid.Row="2" TextAlignment="Right" Grid.Column="2">
+                <Run Text="Total hours:" />
+                <Run Text="{Binding Path=PeriodTotalHours, StringFormat=##0.#}" />
+            </TextBlock>
+
+            <StackPanel Grid.RowSpan="3" Grid.Row="0" Grid.Column="3"
+                        Margin="16,0,0,0"
+                        Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Width="60"
+                        Height="60"
+                        Command="{Binding SaveEntriesCommand}"
+                        Style="{DynamicResource MetroCircleButtonStyle}">
+                    <Button.ToolTip>Save your time entries</Button.ToolTip>
+                    <Rectangle Width="30"
+                               Height="30"
+                               Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill"
+                                         Visual="{DynamicResource appbar_save}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+
+        <controls:MetroProgressBar Grid.Row="1" Height="10"
+                                   IsIndeterminate="False" Orientation="Horizontal"
+                                   Value="{Binding SavingProgress}" />
+
+        <Grid Grid.Row="2" Name="ActivityControlsContainer">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Margin="10,0">
+                <ToggleButton Width="50"
+                              Height="50"
+                              Margin="0,10,0,0"
+                              Checked="ToggleButton_OnChecked"
+                              Unchecked="ToggleButton_OnUnchecked"
+                              Style="{DynamicResource MetroCircleToggleButtonStyle}">
+                    <ToggleButton.ToolTip>Resize day bars</ToggleButton.ToolTip>
+                    <Rectangle Width="20"
+                               Height="20"
+                               Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill"
+                                         Visual="{DynamicResource appbar_dimension_box_width}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </ToggleButton>
+                <Button Width="50"
+                        Height="50"
+                        Margin="0,10,0,0"
+                        Command="{Binding AddTimeEntryCommand}"
+                        Style="{DynamicResource MetroCircleButtonStyle}">
+                    <Button.ToolTip>Add a time entry</Button.ToolTip>
+                    <Rectangle Width="20"
+                               Height="20"
+                               Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill"
+                                         Visual="{DynamicResource appbar_add}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+            </StackPanel>
+            <local:ActivityDetailsControl Grid.Column="1" x:Name="ActivityDetails" Visibility="Hidden" />
+        </Grid>
+
+        <Grid Grid.Row="3" Name="PeriodActivityContainer"
+              VerticalAlignment="Stretch">
+            <ListView Name="PeriodListView" ItemsSource="{Binding Days}"
+                      Background="Transparent"
+                      ItemTemplate="{StaticResource DayActivityTemplate}"
+                      VerticalAlignment="Stretch"
+                      VerticalContentAlignment="Stretch"
+                      SelectedItem="{Binding SelectedDay}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+        </Grid>
+
+    </Grid>
+</UserControl>

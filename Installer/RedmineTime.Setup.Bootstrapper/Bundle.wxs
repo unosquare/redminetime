@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+	<Bundle Name="RedmineTime" Version="1.0.0.0" Manufacturer="Unosquare Labs" UpgradeCode="e5d6e9ae-6bd2-462d-9d4b-b2a593324b1b" 
+          IconSourceFile="..\..\RedmineTime\Assets\RedmineTime.ico" DisableModify="yes" DisableRepair="yes" >
+		<BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" >
+      <bal:WixStandardBootstrapperApplication LicenseFile="mit_license.rtf" LogoFile=".\redmine_logger.png" />
+    </BootstrapperApplicationRef>
+
+		<Chain>
+      <PackageGroupRef Id="NetFx452Web"/>
+			<MsiPackage  SourceFile="$(var.RedmineTime.Setup.TargetPath)" />
+		</Chain>
+  
+	</Bundle>
+</Wix>
