@@ -26,20 +26,20 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" Target="{Binding ElementName=IssueCombo}" >Issue</Label>
-            <ComboBox Grid.Row="0" Grid.Column="1" Name="IssueCombo" ItemsSource="{Binding Issues}" SelectedItem="{Binding SelectedIssue}" />
+            <ComboBox Grid.Row="0" Grid.Column="1" Name="IssueCombo" ItemsSource="{Binding Issues}" SelectedItem="{Binding SelectedIssue, Mode=TwoWay}" />
 
             <Label Grid.Row="0" Grid.Column="2" Target="{Binding ElementName=ActivityDatePicker}" >Date</Label>
-            <DatePicker Grid.Row="0" Grid.Column="3" Name="ActivityDatePicker" SelectedDate="{Binding SelectedDate}" 
+            <DatePicker Grid.Row="0" Grid.Column="3" Name="ActivityDatePicker" SelectedDate="{Binding SelectedDate, Mode=TwoWay}" 
                     DisplayDateStart="{Binding Path=Period.StartDate}" DisplayDateEnd="{Binding Path=Period.EndDate}"/>
 
             <Label Grid.Row="0" Grid.Column="4" Target="{Binding ElementName=HoursTextbox}" >Hours</Label>
-            <controls:NumericUpDown Interval="0.5" Grid.Row="0" Grid.Column="5" Name="HoursTextbox" Value="{Binding Hours}" />
+            <controls:NumericUpDown Interval="0.5" Grid.Row="0" Grid.Column="5" Name="HoursTextbox" Value="{Binding Hours, Mode=TwoWay}" />
 
             <Label Grid.Row="2" Grid.Column="2" Target="{Binding ElementName=ActivityCombo}" >Activity</Label>
-            <ComboBox Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Name="ActivityCombo" ItemsSource="{Binding Activities}" SelectedItem="{Binding SelectedActivity}" DisplayMemberPath="Name"/>
+            <ComboBox Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Name="ActivityCombo" ItemsSource="{Binding Activities, Mode=TwoWay}" SelectedItem="{Binding SelectedActivity}" DisplayMemberPath="Name"/>
 
             <Label Grid.Row="2" Grid.Column="0" Target="{Binding ElementName=CommentTextbox}" >Comment</Label>
-            <TextBox Grid.Row="2" Grid.Column="1" Name="CommentTextbox" Text="{Binding Comments}" controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="Provide a comment, please" />
+            <TextBox Grid.Row="2" Grid.Column="1" Name="CommentTextbox" Text="{Binding Comments, Mode=TwoWay}" controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="Provide a comment, please" />
 
             <Button Grid.Row="0" Grid.Column="6" Content="Add" Width="80" Margin="5,0" Height="27" Command="{Binding SaveActivityCommand}"/>
             <Button Visibility="Collapsed" Grid.Row="2" Grid.Column="6" Content="Remove" Width="80" Height="27" Command="{Binding RemoveActivityCommand}"/>

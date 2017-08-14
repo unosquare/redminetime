@@ -32,7 +32,7 @@ namespace Unosquare.RedmineTime.ViewModel
             Messenger.Default.Register<RemoveEntryMessage>(this, args => RemoveEntry(args.TimeEntry));
             _saveEntriesCommand = new RelayCommand(SaveEntries, CanSaveEntries);
             _returnToProjectSelectionCommand = new RelayCommand(ReturnToProjectSelection);
-            _addTimeEntryCommand = new RelayCommand(AddNewEntry);
+            _addTimeEntryCommand = new RelayCommand(CaptureNewEntry);
         }
 
         public WorkPeriod Period
@@ -90,7 +90,7 @@ namespace Unosquare.RedmineTime.ViewModel
             set
             {
                 Set(() => SelectedDay, ref _selectedDay, value);
-                Messenger.Default.Send(new SelectedDayMessage(SelectedDay.Day));
+                Messenger.Default.Send(new EditActivityMessage(SelectedDay.Day, SelectedUser, SelectedUserProject, _period, true));
             }
         }
 
@@ -102,7 +102,7 @@ namespace Unosquare.RedmineTime.ViewModel
 
         public ICommand ReturnToProjectSelectionCommand => _returnToProjectSelectionCommand;
 
-        private void AddNewEntry()
+        private void CaptureNewEntry()
         {
             var day = Days.FirstOrDefault(d => d.TotalHours < 8) ?? Days.First();
             Messenger.Default.Send(new EditActivityMessage(day.Day, _selectedUser, _selectedUserProject, _period, true));
@@ -166,6 +166,7 @@ namespace Unosquare.RedmineTime.ViewModel
             SelectedUser = arguments.User;
             SelectedUserProject = arguments.UserProject;
             Period = arguments.Period;
+            CaptureNewEntry();
         }
 
         private void GetSavedActivities()

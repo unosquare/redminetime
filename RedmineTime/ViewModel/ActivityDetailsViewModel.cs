@@ -31,7 +31,6 @@ namespace Unosquare.RedmineTime.ViewModel
         {
             Messenger.Default.Register<TimeEntrySelectedMessage>(this, InitializeSelected);
             Messenger.Default.Register<LogTimeMessage>(this, Initialize);
-            Messenger.Default.Register<SelectedDayMessage>(this, message => SetDay(message.Day));
             Messenger.Default.Register<EditActivityMessage>(this, Edit);
             _saveActivityCommand = new RelayCommand(SaveActivity, CanSaveActivity);
             _removeActivityCommand = new RelayCommand(RemoveActivity, CanRemoveActivity);
